@@ -1,50 +1,130 @@
 import java.util.List;
 import java.util.Scanner;
 
+//String alphabet = "абвгдеёжзийклмнопрстуфхцшщчъыьэюяabcdefghijklmnopqrstuvwxyz";
+
 class Task {
     public static void main (String [] args) {      
-        List <Integer> array  = userInput ();
-
+       //List <Integer> array  = userInput ();
        
     }   
 
-    public bool searchSymbolsA (String text) {
+    public bool checkText (String text) {
          int strlen = 0;
-         String alphabet = "абвгдеёжзийклмнопрстуфхцшщчъыьэюя";
+         String numsAndSymbols = "0123456789.,\";:!`~?\'[]{}()<>#$%^&*/+@.=|\\";
          String ltext = text.toLowerCase();
-         for(char i : ltext) {
-            for(char j : alphabet) {
-                if (i == j) { 
+         for(int i = 0; i < ltext.length(); i++) {  
+            for(int j = 0; j < numsAndSymbols.length(); j++) {
+                if (ltext.charAt(i) == numsAndSymbols.charAt(j)) {
                     strlen +=1; 
                 }
             }
         }
-        return strlen == text.length();
+        return strlen == 0;
     }
-
-    public bool searchSymbolsN (String date) {
-         int strlen = 0;
-         String numbers = "0123456789";
-         for(char i : date) {
-            for(char j : numbers) {
-                if (i == j) { 
-                    strlen +=1; 
+ 
+    // Метод для проработки ошибок ввода фамилии
+    public String checkSurname() {
+        Scanner scan = new Scanner(System.in); 
+        String userInput, surEnd, accept;
+        bool approve = true;
+        while (approve) {
+            System.out.println("Повторно введите фамилию: ");
+            userInput = scan.nextLine();            
+            surEnd = userInput.charAt(userInput.length() - 1) + userInput.charAt(userInput.length() - 2);
+            if (surEnd == "ов" || surEnd == "ва" || surEnd == "на" || surEnd == "ин" || surEnd == "ев") {
+                if (checkText(userInput)) {
+                    p.setSurname(userInput);
+                    break;                    
+                } else {
+                    System.out.println("В тексте имеются посторонние символы\n");
+                }
+            } else {
+                System.out.println("Введенный текст " + userInput + " не является фамилией в результате анализа имеющихся критерий!\n");                
+                while(true) {
+                    System.out.println("Принять введенную фамилию: \"" + userInput + "\"?  (y / n) \n");
+                    accept = scan.nextLine();
+                    if (accept == "y") {
+                        scan.close();  
+                        return userInput;
+                    } else if (accept == "n") {
+                        System.out.println("В тексте имеются посторонние символы\n");
+                        break;
+                    } else {
+                        System.out.println("Некорректный ответ!\n");
+                    }
                 }
             }
         }
-        return strlen == date.length();
+        scan.close();
+        return userInput;
+    }
+
+    // Метод для проработки ошибок ввода отчества
+    public String checkPatronymic() {
+        Scanner scan = new Scanner(System.in); 
+        String userInput, patroEnd, accept;
+        bool approve = true;
+        while (approve) {
+            System.out.println("Повторно введите отчество: ");
+            userInput = scan.nextLine();
+            patroEnd = userInput.charAt(userInput.length() - 1) + userInput.charAt(userInput.length() - 2) + userInput.charAt(userInput.length() - 3); 
+            if (patroEnd == "вич" || patroEnd == "вна") {
+                if (checkText(userInput)) {
+                    p.setSurname(userInput);
+                    break;
+                } else {
+                    System.out.println("В тексте имеются посторонние символы\n");
+                }
+            } else {
+                System.out.println("Введенный текст " + userInput + " не является отчеством в результате анализа имеющихся критерий!\n");                
+                while(true) {
+                    System.out.println("Принять введенное отчество: \"" + userInput + "\"?  (y / n) \n");
+                    accept = scan.nextLine();
+                    if (accept == "y") {
+                        scan.close();  
+                        return userInput;
+                    } else if (accept == "n") {
+                        System.out.println("В тексте имеются посторонние символы\n");
+                        break;
+                    } else {
+                        System.out.println("Некорректный ответ!\n");
+                    }
+                }
+            }
+        }
+        scan.close();  
+        return userInput;
     }
     
+    // Метод для обработки ошибок ввода даты рождения
+    public String checkBirth() {
+        Scanner scan = new Scanner(System.in); 
+        String text = "";
 
 
-    
+
+        scan.close();        
+        return text;
+    }
+
+    // Метод для обработки ошибок ввода номера телефона
+
+
+    // Метод для обработки ошибок ввода имени
+
+
+
+
+
     public Hashmap userInput () {
         Scanner scan = new Scanner(System.in); 
         List<String> arrList = new ArrayList();
-        
+        People p = new People();
+
         bool access = true;
-        String inputText = "";
-        String text = "";
+        String inputText, text = "";
+        //String text = "";
         while (access) {
             System.out.println("Введите в произвольном порядке ФИО, дату рождения, номер телефона и пол через пробелы в формате: \n");
             System.out.println("ФИО - Фамилия Имя Отчетство \n");
@@ -52,118 +132,55 @@ class Task {
             System.out.println("Номер телефона - 89991234567 \n");
             System.out.println("Пол - f или m \n");
             
-            inputText = scan.nextLine();
-
-            for (int i = 0; i < inputText.length(); i++) {                    
-                if (inputText[i] != ' ') {
-                    text +=inputText[i];
-                } else {
-                    arrList.add(text);
-                    text = "";
-                    vol += 1;
-                }
-            }
-
-            HashMap<String, String> userInfo = new HashMap<>();
-            //List<Integer> arrNumbers = new ArrayList('0','1','2','3','4','5','6','7','8','9');
-            String alphabet = "абвгдеёжзийклмнопрстуфхцшщчъыьэюя";
-            //List<Integer> arrSymbols = new ArrayList('.',',','"',';',':','!','`','~','?', '',
-            //                                         '[',']','{','}','(',')','<','>','#','$',
-            //                                         '%','^','&','*','/','+','-','@','.','=','|','\\');          
-            
-            //int error = 0;
-            //int strlen = 0;
-            int fio = 1;
-            String temp = "";
-            for(int h =0; h < arrList.length(); h++) {
-                temp = arrList[h];
-                String sur = temp[temp.length() - 1] + temp[temp.length() - 2];
-                String patro = temp[temp.length() - 1] + temp[temp.length() - 2] + temp[temp.length() - 3];
-                int 
-                temp[temp.length() -1];
-                temp[temp.length() -1]
-                temp[temp.length() -1]
-
-
-
-                // Проверка фамилия ли это
-                if (sur == "ов" || sur == "ва" || sur == "на" || sur == "ин" || sur == "ев") {                   
-                    fio +=1;
-                    if (searchSymbols(temp)) {
-                        userInfo.put("Фамилия" , temp);
-                        arrList.remove(h);
+            inputText = scan.nextLine(); 
+            if (inputText == "") {
+                System.out.println("Ошибка! Ничего не введено!\nПовторите попытку!\n");                
+                break;
+            } else {
+                // Извлечение из текста информации и перенос ее в массив arrList                 
+                for (int i = 0; i < inputText.length(); i++) {
+                    if (inputText.charAt(i) != ' ') { 
+                        text +=inputText.charAt(i);
                     } else {
-                        System.out.println("В тексте имеются посторонние символы\n");
-                        //// Необходимо обработать ошибку
-                    }         
-                } else if (fio == 2) {
-                    fio +=1;
-                    if (searchSymbols(temp)) {
-                        userInfo.put("Имя" , temp);
-                        arrList.remove(h);
-                    } else {
-                        System.out.println("В тексте имеются посторонние символы\n");
-                        //// Необходимо обработать ошибку
-                    }       
-                } else if (patro == "вич" ||patro == "вна") {
-                    if (searchSymbols(temp)) {
-                        userInfo.put("Отчество" , temp);
-                        arrList.remove(h);
-                    } else {
-                        System.out.println("В тексте имеются посторонние символы\n");
-                        //// Необходимо обработать ошибку
+                        arrList.add(text);
+                        text = "";
+                        vol += 1;
                     }
-                } else if ((temp.length() == 10 && temp[2] == '.' && temp[5] == '.') || 
-                (temp.length() == 10 && temp[2] == '.' && temp[7] == '.') || 
-                (temp.length() == 10 && temp[4] == '.' && temp[7] == '.')) {
-                    
+                } 
+                if (arrList != 6) {
+                    System.out.println("Ошибка ввода!\nВведены не все запрашиваемые элементы!\n");
+                    break;
+                } else {                    
+                    // Рассмотрение каждого элемента массива 
+                    String sur, patro = "";
+                    for(String temp : arrList) {      
+                        sur = temp.charAt(temp.length() - 1) + temp.charAt(temp.length() - 2);
+                        patro = ttemp.charAt(temp.length() - 1) + temp.charAt(temp.length() - 2) + temp.charAt(temp.length() - 3);                  
+                        
+                        if (sur == "ов" || sur == "ва" || sur == "на" || sur == "ин" || sur == "ев") {
+                            if (checkText(temp)) {
+                                p.setSurname(temp);
+                                arrList.remove(h);
+                                
+                            } else {
+                                System.out.println("В тексте имеются посторонние символы\n");
+                                p.setSurname(checkSurname());
+                                arrList.remove(h);
+                            }
+                        } else if (patro == "вич" || patro == "вна") {
+                            if (checkText(temp)) {
+                                p.setPatronymic(temp);
+                                arrList.remove(h);
+                            } else {
+                                System.out.println("В тексте имеются посторонние символы\n");
+                                p.setPatronymic(checkPatronymic());
+                                arrList.remove(h);
+                            }
+                        }                        
+                    }
+                    scan.close();  
                 }
-
-
-                
-
-
-// Петров - Петрова
-// Сидоров - Сидорова
-// Гильмутдинов - Гильмутдинова
-// Хорт
-                "Name"
-                "Surname"
-                "Patronymic"
-                "PhoneNumber"
-                "DateofBirth"
-                "Floor"
-
-                
             }
-
-          
-
         }
-        
-
-
-
     }
-
-
 }
-
-
-/*
-for(int i =0; i < temp.length(); i++) {
-                        for(char n : arrNumbers) {
-                            if (temp[i] == n) {
-                                System.out.println("В введенной Вами строке имеется число: " + n + "\n");
-                                error +=1;
-                                break;
-                            }
-                        }
-                        for(char s : arrSymbols) {
-                            if (temp[i] == s) {
-                                System.out.println("В введенной Вами строке имеется символ: " + s + "\n");
-                                error +=1;
-                                break;
-                            }
-                        }
-                    } */
