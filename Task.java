@@ -98,14 +98,53 @@ class Task {
     }
     
     // Метод для обработки ошибок ввода даты рождения
-    public String checkBirth(String text) {
+    public String checkBirth(String date) {
         Scanner scan = new Scanner(System.in);
-        int point
+        List <Character> arrnums = {'0','1','2','3','4','5','6','7','8','9'};
+        Map <String, Integer> arrDaysMounth = {{"01", 31}, {"02", 28}, {"03", 31}, 
+                                               {"04", 30}, {"05", 31}, {"06", 30},
+                                               {"07", 31}, {"08", 31}, {"09", 30},
+                                               {"10", 30}, {"11", 30}, {"12", 31}};
+        int volume = 0;
+        String userInput;
+        //String mounth;
+        int days, mounth, year;
+
+
+        bool accept = true;
+        while(accept) {
+            if (date.length() == 10 && date.charAt(2) == '.' && date.charAt(5) == '.') {            
+                for(int i = 0; i < date.length(); i++) {
+                    for(char k : arrnums) {     
+                        if (date.charAt(i) == 'k') {
+                            volume +=1;
+                            break;
+                        }
+                    }                    
+                }
+                if (date.length() == volume) {
+                    days = Integer.parseInt(date.charAt(0) + date.charAt(1));
+                    mounth = date.charAt(3) + date.charAt(4);
+
+
+                    Integer.parseInt(myString);
 
 
 
 
 
+
+                }
+
+
+
+
+            } else {
+                System.out.println("Введеная дата рождения: " + date + " не соответствует заданным параметрам!\n");                
+                System.out.println("Формат ввода даты рождения: дд.мм.гггг");
+                userInput = scan.nextLine();
+            }
+        }        
         scan.close();        
         return text;
     }
