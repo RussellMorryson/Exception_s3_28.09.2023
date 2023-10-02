@@ -245,9 +245,12 @@ class Task {
         List<Character> arrnums = new ArrayList <>() {{add('0'); add('1'); add('2'); add('3'); add('4'); add('5'); add('6'); add('7'); add('8'); add('9');}};
         List<String> arrEements = new ArrayList <>(){{add("Surname"); add("Name"); add("Patronymic"); add("Birth"); add("Phone"); add("Floor");}};
         
-        String inputText, text = "";
+        String inputText = "";
+        String lastEl = "";
+        String text = "";
         Boolean access = true;
-        int index, volume;
+        Boolean floorBool = true;
+        int index, volume;        
 
         while (access) {            
             index = -1;
@@ -259,7 +262,7 @@ class Task {
             System.out.println("Пол - f или m\n");
             
 
-            inputText = scan.nextLine(); 
+            inputText = scan.nextLine();
             if (inputText == "") { 
                 System.out.println("/============================================\\"); 
                 System.out.println("|        Ошибка! Ничего не введено!          |");                
@@ -281,22 +284,31 @@ class Task {
                 } 
 
                 if (arrList.size() != 6) {
-
                     System.out.println("/============================================\\"); 
                     System.out.println("|               Ошибка ввода!                |");                
                     System.out.println("|   Введены не все запрашиваемые элементы!   |");
-                    System.out.println("\\============================================/"); 
-                
-                } else {                    
-                    // Рассмотрение каждого элемента массива 
-                    
+                    System.out.println("\\============================================/");                 
+                } else {
+                    lastEl = arrList.get(arrList.size() -1);                    
+                    while(floorBool) {
+                        if (lastEl.charAt(0) == 'f' || lastEl.charAt(0) == 'm') {
+                            p.setFloor(lastEl.charAt(0));
+                            arrList.remove(arrList.size() -1);
+                            break;                            
+                        } else {
+                            System.out.println("Пол введен некорректно!\nПовторно введите пол (m - муж / f - жен:");                        
+                            lastEl = scan.nextLine();
+                        }
+                    }
+
+                    // Рассмотрение каждого элемента массива                     
                     String sur, patro;
                     for(String temp : arrList) {
                         index += 1;                        
                         sur = "";
                         patro = "";
                         sur += temp.charAt(temp.length() - 1);
-                        sur += temp.charAt(temp.length() - 2);
+                        sur += temp.charAt(temp.length() - 2);                        
 
                         patro += temp.charAt(temp.length() - 1);
                         patro += temp.charAt(temp.length() - 2);
@@ -359,7 +371,6 @@ class Task {
                 }
             }
         }
-
         scan.close();
         return p;
     }
