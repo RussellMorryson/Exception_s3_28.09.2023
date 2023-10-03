@@ -5,7 +5,7 @@ class People {
     private String patronymic;  // Отчество
     private String birth;       // Дата рождения
     private String phone;       // Телелфонный номер
-    private char floor;         // Пол
+    private String floor;         // Пол
 
     // Методы для возврата значений информации о человеке
     public String getName() { return name; }
@@ -13,7 +13,7 @@ class People {
     public String getPatronymic() { return patronymic; }
     public String getBirth() { return birth; }
     public String getPhone() { return phone; }
-    public Char getFloor() { return floor; }
+    public String getFloor() { return floor; }
 
     // Методы для установления и корректировки информации о человеке
     public void setName(String name) { this.name = name; }
@@ -21,10 +21,10 @@ class People {
     public void setPatronymic(String patronymic) { this.patronymic = patronymic; }
     public void setBirth(String birth) { this.birth = birth; }
     public void setPhone(String phone) { this.phone = phone; }
-    public void setFloor(char floor) { this.floor = floor; }
+    public void setFloor(String floor) { this.floor = floor; }
 
     // Основной конструктор
-    public People(String name, String surname, String patronymic, String birth, String phone, char floor) {
+    public People(String name, String surname, String patronymic, String birth, String phone, String floor) {
         this.name = name;
         this.surname = surname;
         this.patronymic = patronymic;
@@ -32,9 +32,11 @@ class People {
         this.phone = phone;
         this.floor = floor;
     }
+     public People() {        
+    }
 
     // Возвращение всей информации в виде текста
-    public Stirng allInfo(){
+    public String allInfo(){
         return "<" + name + ">" + 
                "<" + surname + ">" + 
                "<" + patronymic + ">" + 
@@ -45,11 +47,11 @@ class People {
 
     // Вывод в консоль всей информации
     public void printAllInfo(){
-        System.out.println("<" + name + ">" + 
-                           "<" + surname + ">" + 
-                           "<" + patronymic + ">" + 
-                           "<" + birth + ">" + 
-                           "<" + phone + ">" + 
-                           "<" + floor+ ">");
+        System.out.println("<" + this.name + ">" + 
+                           "<" + this.surname + ">" + 
+                           "<" + this.patronymic + ">" + 
+                           "<" + this.birth + ">" + 
+                           "<" + this.phone + ">" + 
+                           "<" + this.floor+ ">");
     }
 }
