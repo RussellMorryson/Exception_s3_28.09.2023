@@ -35,6 +35,7 @@ public class Task_x {
             else { 
                 for(int i = 0; i < userIn.length(); i++) {
                     if (i == userIn.length()-1) {
+                        word += userIn.charAt(i);
                         arrayHumanInfo.add(word);
                         word = "";
                     }            
@@ -48,22 +49,22 @@ public class Task_x {
             }
         }
 
-        for(String temp : arrayHumanInfo) {
-            if (temp != "") {                
-                if(temp.length() == 1 && temp == "f" || temp.length() == 1 && temp == "m") {                    
+        for(String temp : arrayHumanInfo) {            
+            if (temp != "") {
+                if(temp.length() == 1 && temp.charAt(0) == 'f' || temp.length() == 1 && temp.charAt(0) == 'm') {                    
                     human.setFloor(temp);
                 } else if (temp.length() == 10 && temp.charAt(2) == '.' && temp.charAt(5) == '.') {
                     human.setBirth(checkBirthDate(temp));
                 } else if (temp.charAt(0) == '8' || temp.charAt(0) == '+' && temp.charAt(1) == '7') {
                     human.setPhone(checkPhone(temp));
-                } else if ((temp.charAt(temp.length() - 2) == 'о' && temp.charAt(temp.length() - 1) == 'в') ||
-                (temp.charAt(temp.length() - 2) == 'в' && temp.charAt(temp.length() - 1) == 'а') ||
-                (temp.charAt(temp.length() - 2) == 'н' && temp.charAt(temp.length() - 1) == 'а') ||
-                (temp.charAt(temp.length() - 2) == 'и' && temp.charAt(temp.length() - 1) == 'н') ||
-                (temp.charAt(temp.length() - 2) == 'е' && temp.charAt(temp.length() - 1) == 'в')) {
+                } else if ((temp.length() > 2 && temp.charAt(temp.length() - 2) == 'о' && temp.charAt(temp.length() - 1) == 'в') ||
+                (temp.length() > 2 && temp.charAt(temp.length() - 2) == 'в' && temp.charAt(temp.length() - 1) == 'а') ||
+                (temp.length() > 2 && temp.charAt(temp.length() - 2) == 'н' && temp.charAt(temp.length() - 1) == 'а') ||
+                (temp.length() > 2 && temp.charAt(temp.length() - 2) == 'и' && temp.charAt(temp.length() - 1) == 'н') ||
+                (temp.length() > 2 && temp.charAt(temp.length() - 2) == 'е' && temp.charAt(temp.length() - 1) == 'в')) {
                     human.setSurname(checkSurname(temp));
-                } else if ((temp.charAt(temp.length() - 3) == 'в' && temp.charAt(temp.length() - 2) == 'и' && temp.charAt(temp.length() - 1) == 'ч') ||
-                (temp.charAt(temp.length() - 3) == 'в' && temp.charAt(temp.length() - 2) == 'н' && temp.charAt(temp.length() - 1) == 'а')) {
+                } else if ((temp.length() > 3 && temp.charAt(temp.length() - 3) == 'в' && temp.charAt(temp.length() - 2) == 'и' && temp.charAt(temp.length() - 1) == 'ч') ||
+                (temp.length() > 3 && temp.charAt(temp.length() - 3) == 'в' && temp.charAt(temp.length() - 2) == 'н' && temp.charAt(temp.length() - 1) == 'а')) {
                     human.setPatronymic(checkPatronymic(temp));
                 } else {
                     human.setName(checkName(temp));
@@ -131,12 +132,12 @@ public class Task_x {
             while (true) {
                 System.out.println("Введите пол (f - жен / m - муж): ");
                 word = scan.nextLine();
-                if (word == "f" || word == "m") {
+                if (word.charAt(0) == 'f' || word.charAt(0) == 'm') {
                     human.setFloor(word);
                     break;
                 } else { System.out.println("Ошибка ввода!"); }
             }
-        }            
+        }
         scan.close();
         return human;
     }
@@ -340,4 +341,5 @@ public class Task_x {
         }        
         return vol;
     }
+
 }
