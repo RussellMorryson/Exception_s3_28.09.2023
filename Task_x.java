@@ -1,10 +1,16 @@
 import java.util.*;
+import java.io.*;
+
 
 public class Task_x {
     public static void main (String [] args) {
         People p = new People();
         p = createPeople();
-        System.out.println(p.allInfo());
+
+        try(FileWriter fw = new FileWriter("note.txt", true)) {
+            fw.write(p.allInfo() + "\n");
+            fw.flush();
+        } catch(IOException e){ System.out.println(e.getMessage()); }
     }
 
 // Пользовательский ввод и начало анализа введенных данных
