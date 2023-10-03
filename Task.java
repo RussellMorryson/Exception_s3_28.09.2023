@@ -235,6 +235,38 @@ class Task {
 
 
     // Метод для обработки ошибок ввода имени
+    public static String checkName (String name) {
+        Scanner scan = new Scanner(System.in);
+        String choice = "";
+        String inputName = name;        
+        
+        while (true) {
+            if (checkText(inputName)) {
+                break;
+            } else {
+                System.out.println("==========================================================");
+                System.out.println("||   В введеном имени обнаружены посторонние символы!   ||");                
+                System.out.println("==========================================================");                
+                
+                while(true) {
+                    System.out.println("Принять текущее имя \"" + inputName + "\" ? (y / n)");
+                    choice = scan.nextLine();
+                    if (choice == "y") {
+                        scan.close();
+                        return inputName;
+                    } else if (choice == "n") {
+                        System.out.println("Введите повторно имя: ");
+                        inputName = scan.nextLine();
+                        break;
+                    } else {
+                        System.out.println("Некорректный ввод! Повторите попытку: ");
+                    }
+                }
+            }        
+        }
+        scan.close();
+        return inputName;
+    }
 
 
     // Основной запускаемый метод с ответвлениями
@@ -248,11 +280,12 @@ class Task {
         String inputText = "";
         String lastEl = "";
         String text = "";
+
         Boolean access = true;
         Boolean floorBool = true;
-        int index, volume;        
+        int index, volume;
 
-        while (access) {            
+        while (access) {
             index = -1;
             volume = 0;
             System.out.println("Введите в произвольном порядке ФИО, дату рождения, номер телефона и пол через пробелы в формате:");
@@ -260,7 +293,6 @@ class Task {
             System.out.println("Дата рождения - дд.мм.гггг");
             System.out.println("Номер телефона - 89991234567");
             System.out.println("Пол - f или m\n");
-            
 
             inputText = scan.nextLine();
             if (inputText == "") { 
@@ -290,7 +322,7 @@ class Task {
                     System.out.println("\\============================================/");                 
                 } else {
                     lastEl = arrList.get(arrList.size() -1);                    
-                    while(floorBool) {
+                    while(true) {
                         if (lastEl.charAt(0) == 'f' || lastEl.charAt(0) == 'm') {
                             p.setFloor(lastEl.charAt(0));
                             arrList.remove(arrList.size() -1);
@@ -341,11 +373,9 @@ class Task {
                         } else if ((temp.length() == 10 && temp.charAt(2) == '.' && temp.charAt(5) == '.') || (temp.length() == 10 && temp.charAt(2) == '.' && temp.charAt(7) == '.') || (temp.length() == 10 && temp.charAt(4) == '.' && temp.charAt(7) == '.') ) {
                                 p.setBirth(checkBirth(temp));
                                 //arrList.remove(index);
-                                arrEements.remove(index);
-                        
+                                arrEements.remove(index);                        
                         // Проверка элемента на совпадение с критериями определения номера телефона       
-                        } else if ((temp.length() == 10 && temp.charAt(0) == '8') ||                                     
-                            (temp.length() == 10 && Character.toString(temp.charAt(0) + temp.charAt(1)) == "+7")) {
+                        } else if ((temp.length() == 10 && temp.charAt(0) == '8') || (temp.length() == 10 && Character.toString(temp.charAt(0) + temp.charAt(1)) == "+7")) {
                             for(int i = 0; i < temp.length(); i++) {
                                 for(char k : arrnums) {
                                     if (temp.charAt(i) == k) {
@@ -367,6 +397,11 @@ class Task {
                                 volume = 0;
                             }
                         }                        
+                    } 
+                    for(String temp : arrList) {
+                        if (temp != p.getSurname() && temp != p.getPatronymic() && temp != p.getBirth() && temp != p.getPhone() && temp.charAt(0) != p.getFloor()) {
+                            p.setName(checkName(temp));
+                        }
                     }                    
                 }
             }
